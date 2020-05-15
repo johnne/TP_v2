@@ -52,7 +52,7 @@ rule deML:
         i2 = "data/index/{sample}_2.fastq.gz",
         mapfile = lambda wildcards: config["samples"][wildcards.sample]["mapfile"]
     output:
-        touch("results/intermediate/DeML/{sample}/{sample}.done")
+        touch("results/DeML/{sample}/{sample}.done")
     log:
         "logs/{sample}.deML.log"
     params:
