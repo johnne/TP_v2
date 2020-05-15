@@ -9,4 +9,4 @@ samples:
       mapfile: "info/ITS_root.txt"
 
 test: False
-spots: 1000
+spots: 100000
