@@ -63,7 +63,7 @@ rule deML:
             -i {input.mapfile} -o {params.prefix} > {log} 2>&1
         """
 
-rule add_failed:
+rule remove_failed:
     input:
         "results/intermediate/DeML/{sample}/{sample}.done"
     output:
@@ -74,7 +74,7 @@ rule add_failed:
         strip = "{sample}_"
     shell:
         """
-        bash scripts/merge_failed.sh {params.indir} {params.outdir} {params.strip}
+        bash scripts/remove_failed.sh {params.indir} {params.outdir} {params.strip}
         """
 
 rule fastqc:
