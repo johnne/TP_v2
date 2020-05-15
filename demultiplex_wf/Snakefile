@@ -75,6 +75,7 @@ rule remove_failed:
     shell:
         """
         bash scripts/remove_failed.sh {params.indir} {params.outdir} {params.strip}
+        rm {params.indir}/*.fq.gz
         """
 
 rule fastqc:
