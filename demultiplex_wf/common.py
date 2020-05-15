@@ -8,11 +8,11 @@ import json
 def generate_fastq_ftp(sra_id):
     url_base = "https://www.ebi.ac.uk/ena/portal/api/filereport?"
     query = "accession={sra_id}&result=read_run".format(sra_id=sra_id)
-    fmt = "&fields=fastq_ftp&format=json&download=true"
+    fmt = "&fields=submitted_ftp&format=json&download=true"
     url = "{}{}{}".format(url_base, query, fmt)
     response = urllib.request.urlopen(url)
     data = json.loads(response.read())[0]
-    return data["fastq_ftp"].split(";")
+    return data["submitted_ftp"].split(";")
 
 
 if config["test"]:
