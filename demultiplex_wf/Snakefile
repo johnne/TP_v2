@@ -1,5 +1,6 @@
 configfile: "config.yml"
 include: "common.py"
+singularity: "docker://ubuntu:18.04"
 
 rule all:
     input:
@@ -33,15 +34,10 @@ rule download_data:
     log:
         "logs/{sample}.{dir_type}_{R}.curl.log"
     params:
-        acc = lambda wildcards: config["samples"][wildcards.sample][wildcards.dir_type],
-        url = lambda wildcards: config["ftp"][wildcards.sample][wildcards.dir_type][wildcards.R],
-        dir = lambda wildcards, output: os.path.dirname(output[0]),
-        prefix = "{sample}."
+        url = lambda wildcards: config["ftp"][wildcards.sample][wildcards.dir_type][wildcards.R]
     shell:
         """
-        curl -L -o {params.dir}/{params.acc}_{wildcards.R}.fastq.gz {params.url} > {log} 2>&1
-        seqtk rename {params.dir}/{params.acc}_{wildcards.R}.fastq.gz {params.prefix} | gzip -c > {output}
-        rm {params.dir}/{params.acc}_{wildcards.R}.fastq.gz
+        curl -L -o {output} {params.url} > {log} 2>&1
         """
 
 rule deML:
@@ -63,7 +59,7 @@ rule deML:
             -i {input.mapfile} -o {params.prefix} > {log} 2>&1
         """
 
-rule remove_failed:
+rule add_failed:
     input:
         "results/intermediate/DeML/{sample}/{sample}.done"
     output:
@@ -74,7 +70,7 @@ rule remove_failed:
         strip = "{sample}_"
     shell:
         """
-        bash scripts/remove_failed.sh {params.indir} {params.outdir} {params.strip}
+        bash scripts/add_failed.sh {params.indir} {params.outdir} {params.strip}
         rm {params.indir}/*.fq.gz
         """
 
