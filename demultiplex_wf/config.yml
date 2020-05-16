@@ -2,11 +2,11 @@ samples:
   ITS_needle:
       seqs: "ERR2027937"
       index: "ERR2027944"
-      mapfile: "info/ITS_needle.txt"
+      mapfile: "info/J_ITS_N-validated_1-111_deML.txt"
   ITS_root:
       seqs: "ERR2027938"
       index: "ERR2027945"
-      mapfile: "info/ITS_root.txt"
+      mapfile: "info/J_ITS_R-validated_1-122_deML.txt"
 
 test: False
 spots: 100000
