@@ -50,13 +50,17 @@ rule deML:
     output:
         touch("results/intermediate/DeML/{sample}/{sample}.done")
     log:
-        "logs/{sample}.deML.log"
+        runlog = "logs/{sample}.deML.log",
+        rgval = "logs/{sample}.deML.rgval",
+        ratio = "logs/{sample}.deML.ratio",
+        summary = "logs/{sample}.deML.summary"
     params:
         prefix = lambda wildcards, output: os.path.splitext(output[0])[0]
     shell:
         """
         deML -f {input.R1} -r {input.R2} -if1 {input.i1} -if2 {input.i2} \
-            -i {input.mapfile} -o {params.prefix} > {log} 2>&1
+            -i {input.mapfile} -o {params.prefix} --rgval {log.rgval} \
+            -s {log.summary} --ratio {log.ratio} > {log.runlog} 2>&1
         """
 
 rule add_failed:
