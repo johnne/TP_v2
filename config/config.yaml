@@ -4,7 +4,7 @@ data_dir: "data"
 results_dir: "results"
 
 # Run in test-mode to only use a subset of reads
-test: True
+test: False
 
 # Parameters
 cutadapt:
